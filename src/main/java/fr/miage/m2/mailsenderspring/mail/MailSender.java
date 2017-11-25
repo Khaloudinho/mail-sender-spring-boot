@@ -31,10 +31,10 @@ public class MailSender implements MailService {
     @Value("${mail.password}")
     private String password;
 
-    @Value("${mail.smtp.port}")
+    @Value("${mail.smtp}")
     private String smtport;
 
-    @Value("${mail.pop3.port}")
+    @Value("${mail.pop3}")
     private String pop3port;
 
     public Properties initClientSMTPConf(){
@@ -70,7 +70,7 @@ public class MailSender implements MailService {
             // Create a default MimeMessage object.
             Message message = new MimeMessage(session);
             // Set parameters related to the fr.miage.m2.mail that would be sent.
-            message.setFrom(new InternetAddress(from));
+            message.setFrom(new InternetAddress(this.from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(subject);
             message.setText(messageContent);
