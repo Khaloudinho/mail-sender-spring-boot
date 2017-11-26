@@ -32,24 +32,24 @@ public class MailSender implements MailService {
     private String password;
 
     @Value("${mail.smtp}")
-    private String smtport;
+    private String smtp;
 
     @Value("${mail.pop3}")
-    private String pop3port;
+    private String pop3;
 
     public Properties initClientSMTPConf(){
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", this.host);
-        props.put("mail.smtp.port", this.smtport);
+        props.put("mail.smtp.port", this.smtp);
         return props;
     }
 
     public Properties initClientPOP3Conf(){
         Properties props = new Properties();
         props.put("mail.pop3.host", this.host);
-        props.put("mail.pop3.port", this.pop3port);
+        props.put("mail.pop3.port", this.pop3);
         props.put("mail.pop3.starttls.enable", "true");
         return props;
     }
