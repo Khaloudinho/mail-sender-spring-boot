@@ -54,7 +54,7 @@ public class MailSender implements MailService {
         return props;
     }
 
-    public boolean send(String subject, String messageContent) {
+    public boolean send(String subject, String content) {
         final String username = this.username;
         final String password = this.password;
 
@@ -73,7 +73,7 @@ public class MailSender implements MailService {
             message.setFrom(new InternetAddress(this.from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(subject);
-            message.setText(messageContent);
+            message.setText(content);
 
             // Send message
             Transport.send(message);

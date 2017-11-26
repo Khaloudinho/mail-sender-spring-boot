@@ -29,9 +29,9 @@ public class LoggerAspect {
         }
     }
 
-    @Before("execution(* fr.miage.m2.mailsenderspring.mail.MailSender.send (java.lang.String, java.lang.String)) && args(subject, messageContent) ")
-    public void beforeSendMail(String subject, String messageContent) {
-        log("A mail has been sent : \n " + subject + " \n " + messageContent + "\n");
+    @Before("execution(* fr.miage.m2.mailsenderspring.mail.MailSender.send (java.lang.String, java.lang.String)) && args(subject, content) ")
+    public void beforeSendMail(String subject, String content) {
+        log("A mail has been sent : \n " + subject + " \n " + content + "\n");
     }
 
     @Before("execution(* fr.miage.m2.mailsenderspring.mail.MailSender.receive ()) && args() ")
