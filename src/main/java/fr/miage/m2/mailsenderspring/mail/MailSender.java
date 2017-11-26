@@ -34,10 +34,10 @@ public class MailSender implements MailService {
     private String password;
 
     @Value("${mail.smtp}")
-    private String smtport;
+    private String smtp;
 
     @Value("${mail.pop3}")
-    private String pop3port;
+    private String pop3;
 
     @Bean(name = "MailSenderBean")
     public MailSender MailSender(){
@@ -64,9 +64,6 @@ public class MailSender implements MailService {
     public boolean send(String subject, String content) {
         final String username = this.username;
         final String password = this.password;
-
-        System.out.println("HOST ===========> " + this.host);
-        System.out.println("FROM ===========> " + this.from);
 
         // Get the Session object.
         Session session = Session.getInstance(initClientSMTPConf(),
