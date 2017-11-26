@@ -5,8 +5,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LoggerAspect {
 
     public static void log (String message) {
@@ -29,12 +29,12 @@ public class LoggerAspect {
         }
     }
 
-    @Before("execution(* fr.miage.m2.mailsenderspring.mail.MailSender.send (java.lang.String, java.lang.String)) && args(subject, messageContent) ")
-    public void beforeSendingMails(String subject, String messageContent) {
-        log("A mail has been sent : \n " + subject + " \n " + messageContent + "\n");
+    //@Before("execution(* fr.miage.m2.mailsenderspring.mail.MailService.send(java.lang.String, java.lang.String)) && args(subject, content) ")
+    public void beforeSendingMails(/*String subject, String content*/) {
+        log("A mail has been sent : \n " /*+ subject + " \n " + content + "\n"*/);
     }
 
-    @Before("execution(* fr.miage.m2.mailsenderspring.mail.MailSender.receive ()) && args() ")
+    //@Before("execution(* fr.miage.m2.mailsenderspring.mail.MailService.receive()) && args() ")
     public void beforeReadingMails() {
         log("We are reading the mails, please wait...");
     }

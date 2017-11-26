@@ -9,18 +9,18 @@
 
     <!-- Aspect -->
     <bean id="LoggerAspect" class="fr.miage.m2.mailsenderspring.aspect.LoggerAspect"/>
-    <bean id="MailSender" class="fr.miage.m2.mailsenderspring.mail.MailSender"/>
+    <bean id="MailService" class="fr.miage.m2.mailsenderspring.mail.MailSender"/>
 
     <aop:config>
         <!-- @Before -->
-        <aop:pointcut id="beforeReading" expression="execution(* fr.miage.m2.mailsenderspring.mail.MailSender.receive()) "/>
+        <aop:pointcut id="beforeReading" expression="execution(* fr.miage.m2.mailsenderspring.mail.MailService.receive()) " />
 
         <!-- @Before -->
-        <aop:pointcut id="beforeSending" expression="execution(* fr.miage.m2.mailsenderspring.mail.MailSender.send (java.lang.String, java.lang.String)) "/>
+        <aop:pointcut id="beforeSending" expression="execution(* fr.miage.m2.mailsenderspring.mail.MailService.send(java.lang.String, java.lang.String)) " />
 
         <aop:aspect id="aspectLogging" ref="LoggerAspect">
-            <aop:before method="beforeReadingMails" pointcut-ref="beforeReading"/>
-            <aop:before method="beforeSendingMails" pointcut-ref="beforeSending"/>
+            <aop:before method="beforeReadingMails" pointcut-ref="beforeReading" />
+            <aop:before method="beforeSendingMails" pointcut-ref="beforeSending" />
         </aop:aspect>
     </aop:config>
 </beans>

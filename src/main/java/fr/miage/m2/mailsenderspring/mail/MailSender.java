@@ -4,13 +4,15 @@ import fr.miage.m2.mailsenderspring.log.ConsoleLogger;
 import fr.miage.m2.mailsenderspring.log.FileLogger;
 import fr.miage.m2.mailsenderspring.log.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
 
-@Service
+@Configuration
 public class MailSender implements MailService {
 
     private Logger fileLogger = new FileLogger();
@@ -37,26 +39,34 @@ public class MailSender implements MailService {
     @Value("${mail.pop3}")
     private String pop3port;
 
+    @Bean(name = "MailSenderBean")
+    public MailSender MailSender(){
+        return new MailSender();
+    }
+
     public Properties initClientSMTPConf(){
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", this.host);
-        props.put("mail.smtp.port", this.smtport);
+        props.put("mail.smtp.port", this.smtp);
         return props;
     }
 
     public Properties initClientPOP3Conf(){
         Properties props = new Properties();
         props.put("mail.pop3.host", this.host);
-        props.put("mail.pop3.port", this.pop3port);
+        props.put("mail.pop3.port", this.pop3);
         props.put("mail.pop3.starttls.enable", "true");
         return props;
     }
 
-    public boolean send(String subject, String messageContent) {
+    public boolean send(String subject, String content) {
         final String username = this.username;
         final String password = this.password;
+
+        System.out.println("HOST ===========> " + this.host);
+        System.out.println("FROM ===========> " + this.from);
 
         // Get the Session object.
         Session session = Session.getInstance(initClientSMTPConf(),
@@ -73,7 +83,7 @@ public class MailSender implements MailService {
             message.setFrom(new InternetAddress(this.from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             message.setSubject(subject);
-            message.setText(messageContent);
+            message.setText(content);
 
             // Send message
             Transport.send(message);
@@ -137,4 +147,59 @@ public class MailSender implements MailService {
         return null;
     }
 
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setTo(String to) {
+        this.to = to;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public void setSmtp(String smtp) {
+        this.smtp = smtp;
+    }
+
+    public String getSmtp() {
+        return smtp;
+    }
+
+    public void setPop3(String pop3) {
+        this.pop3 = pop3;
+    }
+
+    public String getPop3() {
+        return pop3;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getFrom() {
+        return from;
+    }
 }
